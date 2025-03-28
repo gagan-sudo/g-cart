@@ -1,0 +1,128 @@
+import React, { useEffect, useState } from "react";
+import { Container, Grid, CssBaseline } from "@mui/material";
+import axios from "axios";
+import Header from "./components/Header";
+import ProductCard from "./components/ProductCard";
+import ThemeProviderWrapper from "./theme/ThemeProviderWrapper";
+
+const Ecommerce = () => {
+  const [products, setProducts] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    axios.get("https://fakestoreapi.com/products")
+      .then(response => setProducts(response.data))
+      .catch(error => console.error("Error fetching products:", error));
+  }, []);
+
+  return (
+    <ThemeProviderWrapper darkMode={darkMode}>
+      <CssBaseline />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Container>
+        <Grid container spacing={3} mt={3} justifyContent="center">
+          {products.map(product => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={4} key={product.id}> {/* Increased width for xl devices */}
+              <ProductCard product={product} darkMode={darkMode} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </ThemeProviderWrapper>
+  );
+};
+
+export default Ecommerce;
+
+
+
+
+import React, { useEffect, useState } from "react";
+import { Container, Grid, Card, CardContent, CardMedia, Typography, Button, ThemeProvider, createTheme, CssBaseline, IconButton, AppBar, Toolbar, Rating } from "@mui/material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
+import axios from "axios";
+
+const App = () => {
+  const [products, setProducts] = useState([]);
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    axios.get("https://fakestoreapi.com/products")
+      .then(response => setProducts(response.data))
+      .catch(error => console.error("Error fetching products:", error));
+  }, []);
+
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      primary: {
+        main: darkMode ? "#32CD32" : "#064420", // Light Green in Dark Mode, Dark Green in Light Mode
+      },
+      secondary: {
+        main: darkMode ? "#FFD700" : "#D4A017", // Dark Yellow in Dark Mode, Stronger Yellow in Light Mode
+      },
+      background: {
+        default: darkMode ? "#181818" : "#FFFFFF",
+        paper: darkMode ? "#242424" : "#FAFAFA",
+      },
+      text: {
+        primary: darkMode ? "#E0E0E0" : "#064420",
+        secondary: darkMode ? "#A0A0A0" : "#555555", // Improved contrast for light mode
+      },
+      error: {
+        main: "#FF0000", // Red color for discounts
+      },
+    },
+  });
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppBar position="fixed" color="primary">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            E-Commerce Store
+          </Typography>
+          <IconButton onClick={() => setDarkMode(!darkMode)} color="inherit">
+            {darkMode ? <Brightness7 /> : <Brightness4 />}
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Toolbar /> {/* Add toolbar spacing to prevent content overlap */}
+      <Container>
+        <Grid container spacing={3} mt={3} justifyContent="center">
+          {products.map(product => (
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={4} key={product.id}> {/* Increased width for xl devices */}
+              <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', backgroundColor: theme.palette.background.paper, color: theme.palette.text.primary }}>
+                <CardMedia
+                  component="img"
+                  sx={{ width: "100%", height: "200px", objectFit: "cover", backgroundColor: darkMode ? "#242424" : "#FAFAFA" }}
+                  image={product.image}
+                  alt={product.title}
+                />
+                <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Typography variant="h6" gutterBottom color="primary">
+                    {product.title}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {product.description.substring(0, 60)}...
+                  </Typography>
+                  <Rating name="read-only" value={product.rating?.rate || 0} precision={0.5} readOnly />
+                  <Typography variant="h6" sx={{ color: theme.palette.mode === 'dark' ? '#FFD700' : '#D4A017' }}>
+                    ${product.price}
+                  </Typography>
+                  <Button variant="contained" color="primary" fullWidth>
+                    Add to Cart
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </ThemeProvider>
+  );
+};
+
+export default App;
+
