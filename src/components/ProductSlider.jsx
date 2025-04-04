@@ -41,7 +41,7 @@ const ProductSlider = ({ category = "vehicle" }) => {
     <Box
       sx={{
         padding: '25px',
-        backgroundColor: theme.palette.background.paper,
+        // backgroundColor: theme.palette.background.paper,
       }}
     >
       {/* Category Heading with Custom Arrows */}

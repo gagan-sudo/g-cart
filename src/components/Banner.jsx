@@ -3,11 +3,14 @@ import { Box, CardMedia, Rating, Typography, useTheme } from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {  useGetProductsQuery } from '../services/product';
+import BannerImage from '../assets/banner.png'
+
+const bannerArray=[BannerImage,BannerImage]
+
 
 const Banner = () => {
   const theme = useTheme();
   const {data : products } = useGetProductsQuery()
-
   
 
   console.log(products)
@@ -72,6 +75,7 @@ const Banner = () => {
       }}
     >
       <Slider {...settings}>
+        {/* {bannerArray.map((item, index) => ( */}
         {products?.products.slice(25,30).map((item, index) => (
           <Box
             key={index}
@@ -83,7 +87,7 @@ const Banner = () => {
           >
             <CardMedia
 
-            image={item.images[0]}
+            image={item?.images[0]}
             sx={{
 
                 height:250,

@@ -8,19 +8,16 @@ import {
   Box,
   Tooltip,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { useTheme } from "@mui/material/styles";
 import logo from "../assets/logo.png";
 import { showToast, showError } from "../helper/toast";
-import { useGetCategoriesListQuery } from "../services/categories";
 import CategorySlider from "./CategorySlider";
 import { useNavigate } from "react-router-dom";
 import CategoryList from "./CategoryList";
 
 function Header({ darkMode, setDarkMode }) {
   const theme = useTheme();
-  const [toggleState,setToggleState] = useState(false)
-  const {data} = useGetCategoriesListQuery()
   const navigate = useNavigate()
   
   const handleThemeToggle = () => {
@@ -35,7 +32,7 @@ function Header({ darkMode, setDarkMode }) {
 
   return (
     <>
-    <AppBar position="fixed" color="primary">
+    <AppBar position="fixed" sx={{backgroundColor:"primary.main"}} color={"primary.main"} >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {/* <IconButton
@@ -59,6 +56,7 @@ function Header({ darkMode, setDarkMode }) {
               <Typography
                 variant="h6"
                 align="center"
+                color={"secondary.dark"}
                 onClick={()=>navigate('/')}
                 sx={{ flexGrow: 1, marginLeft: "10px", ":hover":{
                   cursor:'pointer'
@@ -73,7 +71,7 @@ function Header({ darkMode, setDarkMode }) {
           <Button sx={{color:theme.palette.primary.light,bgcolor:theme.palette.secondary.dark}} onClick={() => showError("You can't login")}>
             Login
           </Button>
-          <IconButton onClick={handleThemeToggle} color="inherit">
+          <IconButton onClick={handleThemeToggle} color="secondary.main">
             {darkMode ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
         </Box>

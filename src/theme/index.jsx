@@ -11,7 +11,7 @@ const ThemeProviderWrapper = ({ darkMode, children }) => {
         light: "#064420",
       },
       secondary: {
-        main: darkMode ? "#FFD700" : "#D4A017", // Dark Yellow in Dark Mode, Stronger Yellow in Light Mode
+        main: darkMode ?  "#D4A017":"#FFD700" , // Dark Yellow in Dark Mode, Stronger Yellow in Light Mode
         dark: "#FFD700",
         light: "#D4A017",
       },

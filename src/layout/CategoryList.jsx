@@ -32,10 +32,10 @@ const CategoryList = () => {
                   onClick={() => { navigate(`/${category}`); handleClose(); }}
                   sx={{
                     padding: '10px',
-                    backgroundColor: theme.palette.grey[200],
                     borderRadius: '8px',
+                    color:theme.palette.primary.main,
                     cursor: 'pointer',
-                    ':hover': { backgroundColor: theme.palette.grey[300] },
+                    ':hover': { backgroundColor: theme.palette.secondary.main },
                   }}
                 >
                   {category.toUpperCase()}
