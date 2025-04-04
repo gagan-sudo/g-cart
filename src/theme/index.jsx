@@ -31,6 +31,7 @@ const ThemeProviderWrapper = ({ darkMode, children }) => {
         main: "#FF0000", // Red color for discounts
       },
     },
+    
   });
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

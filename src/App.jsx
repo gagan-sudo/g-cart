@@ -6,30 +6,35 @@ import Header from "./layout/TopBar";
 import ThemeProviderWrapper from "./theme";
 import { ToastContainer } from "react-toastify";
 import Loader from "./helper/Loader";
+import Banner from "./components/Banner";
+import HomePage from "./pages/HomePage";
+import Routes from "./routes";
+import { RouterProvider } from "react-router-dom";
+import { useThemeMode } from "./hooks/useThemeMode";
+import ThemeModeProvider from "./context/ThemeModeContext";
+import Layout from "./layout";
 
 const App = () => {
 
-  const { data : products = [], error, isLoading } = useGetProductsQuery();
-  const [darkMode, setDarkMode] = useState(false);
-  console.log(products)
+  // const { data : products = [], error, isLoading } = useGetProductsQuery();
+    const {darkMode,setDarkMode} =  useThemeMode()
+  
+ 
 
-  if(error) return <>error</>
-
-  if(isLoading) return <Loader/>
+  // if(error) return <>error</>
+// 
+  // if(isLoading) return <Loader/>
 
   return (
+    
     <ThemeProviderWrapper darkMode={darkMode}>
       <ToastContainer theme={!darkMode ? "dark" : "light"}/>
       <CssBaseline />
-      <Header darkMode={darkMode} setDarkMode={setDarkMode} />
-      <Toolbar /> {/* Add toolbar spacing to prevent content overlap */}
-      <Container>
-        <Grid container spacing={3} mt={3} justifyContent="center">
-          {products?.products.map((product,i) => (
-           <ProductCardForList key={i} product={product} />
-          ))}
-        </Grid>
-      </Container>
+      
+
+      {/* Add toolbar spacing to prevent content overlap */}
+      <RouterProvider router={Routes} />
+     
     </ThemeProviderWrapper>
   );
 };
