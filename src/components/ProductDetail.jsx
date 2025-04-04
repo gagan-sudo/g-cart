@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
 
-const ProductDetail = ({ product, onBack }) => {
+const ProductDetail = ({ product }) => {
 
   const navigate = useNavigate()
 
@@ -34,11 +34,9 @@ const ProductDetail = ({ product, onBack }) => {
 
   return (
     <Container maxWidth="lg" sx={{ mt: 0, position: "relative" }}>
-      <Box sx={{justifySelf:'end'}}>
-      <Button variant="contained" color="primary"  sx={{  mb: 2, fontSize: "1rem", py: 1, px: 3, borderRadius: 2 }} onClick={()=>navigate(-1)} >
-        Back
-      </Button>
-      </Box>
+       <Button sx={{position:'fixed',right:15,top:75,zIndex:5000}} variant="contained" color="primary" onClick={()=>navigate(-1)} >
+                   Back
+                 </Button>
       <Grid container spacing={4} alignItems="stretch">
         {/* Image Slider */}
         <Grid item xs={12} md={6} sx={{ display: "flex", flexDirection: "column" }}>

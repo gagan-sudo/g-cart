@@ -14,6 +14,7 @@ const Banner = () => {
 
   const settings = {
     dots: true,
+    arrows: false,
     infinite: true,
     speed: 400,
     slidesToShow: 4,
