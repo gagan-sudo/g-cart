@@ -3,9 +3,9 @@ import { Box, CardMedia, Rating, Typography, useTheme } from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import {  useGetProductsQuery } from '../services/product';
-import BannerImage from '../assets/banner.png'
+// import BannerImage from '../assets/banner.png'
 
-const bannerArray=[BannerImage,BannerImage]
+// const bannerArray=[BannerImage,BannerImage]
 
 
 const Banner = () => {
@@ -40,7 +40,7 @@ const Banner = () => {
           <ul style={{ display: "flex", gap: "8px", padding: 0 }}>{dots}</ul>
         </Box>
       ),
-    customPaging: i => (
+    customPaging: () => (
         <Box
           sx={{
             width: "10px",

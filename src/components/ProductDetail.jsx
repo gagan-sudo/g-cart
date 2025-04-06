@@ -4,6 +4,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useNavigate } from "react-router-dom";
+import { auth, db } from "../utils/firebase"; // make sure db is imported
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { showError, showToast } from "../helper/toast";
+
 
 const ProductDetail = ({ product }) => {
 
@@ -31,6 +35,35 @@ const ProductDetail = ({ product }) => {
       }
     ]
   };
+
+  const addCart = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      showError("You must be logged in to add items to the cart");
+      navigate("/auth/signin");
+      return;
+    }
+  
+    try {
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        cart: arrayUnion({
+          productId: product.id,
+          title: product.title,
+          price: product.price,
+          quantity: 1,
+          image: product.images[0],
+          addedAt: new Date(),
+        }),
+      });
+  
+      showToast("Product added to cart!");
+    } catch (error) {
+      showError("Failed to add to cart: " + error.message);
+    }
+  };
+  
+
 
   return (
     <Container maxWidth="lg" sx={{ mt: 0, position: "relative" }}>
@@ -85,7 +118,7 @@ const ProductDetail = ({ product }) => {
               <Typography variant="h6" color="textSecondary">
                 Minimum Order Quantity: {product.minimumOrderQuantity}
               </Typography>
-              <Button variant="contained" color="primary" sx={{ mt: 3, width: "100%", fontSize: "1.4rem", py: 1.5, borderRadius: 2 }}>
+              <Button variant="contained" color="primary" sx={{ mt: 3, width: "100%", fontSize: "1.4rem", py: 1.5, borderRadius: 2 }} onClick={addCart} >
                 Add to Cart
               </Button>
             </CardContent>

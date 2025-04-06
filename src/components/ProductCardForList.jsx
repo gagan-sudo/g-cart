@@ -87,7 +87,7 @@ function ProductCardForList({ product }) {
     } 
   }} 
 
-  onClick={()=>showToast("Please Login")}
+  onClick={()=>navigate(`/cart`)}
 
 >
   <ShoppingCartIcon />

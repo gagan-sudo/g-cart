@@ -28,7 +28,7 @@ const App = () => {
   return (
     
     <ThemeProviderWrapper darkMode={darkMode}>
-      <ToastContainer theme={!darkMode ? "dark" : "light"}/>
+      <ToastContainer theme={darkMode ? "dark" : "light"}/>
       <CssBaseline />
       
 
